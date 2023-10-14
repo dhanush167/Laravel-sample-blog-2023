@@ -15,6 +15,7 @@
                             value="{{ $search ?? '' }}"
                             class="form-control"
                             autocomplete="off"
+                            required
                         />
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary">
@@ -85,19 +86,41 @@
                                         </button>
                                     </a>
                                     @endcan @can('delete', $user)
-                                    <form
-                                        action="{{ route('users.destroy', $user) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('{{ __('crud.common.are_you_sure') }}')"
-                                    >
-                                        @csrf @method('DELETE')
-                                        <button
-                                            type="submit"
-                                            class="btn btn-light text-danger"
-                                        >
-                                            <i class="icon ion-md-trash"></i>
-                                        </button>
-                                    </form>
+                                            <form>
+                                                <a
+                                                    class="btn btn-light text-danger"
+                                                    data-target="#deleteModal_{{$user->id}}"
+                                                    data-toggle="modal"
+                                                >
+                                                    <i class="icon ion-md-trash"></i>
+                                                </a>
+                                            </form>
+                                            <div class="modal fade" id="deleteModal_{{$user->id}}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">No</button>
+                                                            <form
+                                                                action="{{ route('users.destroy', $user) }}"
+                                                                method="POST"
+                                                            >
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger">Yes</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     @endcan
                                 </div>
                             </td>

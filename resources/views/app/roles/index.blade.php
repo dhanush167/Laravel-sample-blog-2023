@@ -15,6 +15,7 @@
                             value="{{ $search ?? '' }}"
                             class="form-control"
                             autocomplete="off"
+                            required
                         />
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary">

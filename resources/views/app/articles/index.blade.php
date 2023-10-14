@@ -15,6 +15,7 @@
                             value="{{ $search ?? '' }}"
                             class="form-control"
                             autocomplete="off"
+                            required
                         />
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary">
@@ -78,9 +79,9 @@
                         <tr>
                             <td>{{ $article->title ?? '-' }}</td>
                             <td>{{ $article->slug ?? '-' }}</td>
-                            <td>{{ $article->excerpt ?? '-' }}</td>
-                            <td>{{ $article->description ?? '-' }}</td>
-                            <td>{{ $article->status ?? '-' }}</td>
+                            <td>{!! \Illuminate\Support\Str::limit($article->excerpt,30) ?? '-'  !!}</td>
+                            <td>{!! \Illuminate\Support\Str::limit($article->description,30)  ?? '-' !!} </td>
+                            <td>{{ $article->status ? 'active' : 'inactive' }}</td>
                             <td>{{ optional($article->user)->name ?? '-' }}</td>
                             <td>
                                 {{ optional($article->category)->name ?? '-' }}
@@ -114,19 +115,41 @@
                                         </button>
                                     </a>
                                     @endcan @can('delete', $article)
-                                    <form
-                                        action="{{ route('articles.destroy', $article) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('{{ __('crud.common.are_you_sure') }}')"
-                                    >
-                                        @csrf @method('DELETE')
-                                        <button
-                                            type="submit"
-                                            class="btn btn-light text-danger"
-                                        >
-                                            <i class="icon ion-md-trash"></i>
-                                        </button>
-                                    </form>
+                                            <form>
+                                                <a
+                                                    class="btn btn-light text-danger"
+                                                    data-target="#deleteModal_{{$article->id}}"
+                                                    data-toggle="modal"
+                                                >
+                                                    <i class="icon ion-md-trash"></i>
+                                                </a>
+                                            </form>
+                                            <div class="modal fade" id="deleteModal_{{$article->id}}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">No</button>
+                                                            <form
+                                                                action="{{ route('articles.destroy', $article) }}"
+                                                                method="POST"
+                                                            >
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger">Yes</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     @endcan
                                 </div>
                             </td>
