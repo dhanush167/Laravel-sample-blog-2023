@@ -14,6 +14,14 @@ use App\Http\Requests\ArticleUpdateRequest;
 
 class ArticleController extends Controller
 {
+    private function getFormData()
+    {
+        $users = User::pluck('name', 'id');
+        $categories = Category::pluck('name','id');
+        $tags = Tag::get();
+        return compact('categories','tags','users');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,16 +45,7 @@ class ArticleController extends Controller
     public function create(Request $request): View
     {
         $this->authorize('create', Article::class);
-
-        $users = User::pluck('name', 'id');
-        $categories = Category::pluck('name', 'id');
-
-        $tags = Tag::get();
-
-        return view(
-            'app.articles.create',
-            compact('users', 'categories', 'tags')
-        );
+        return view('app.articles.create',$this->getFormData());
     }
 
     /**
@@ -55,10 +54,7 @@ class ArticleController extends Controller
     public function store(ArticleStoreRequest $request): RedirectResponse
     {
         $this->authorize('create', Article::class);
-
-        $validated = $request->validated();
-
-        $article = Article::create($validated);
+        $article = Article::create(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
 
         $article->tags()->attach($request->tags);
 
@@ -83,16 +79,7 @@ class ArticleController extends Controller
     public function edit(Request $request, Article $article): View
     {
         $this->authorize('update', $article);
-
-        $users = User::pluck('name', 'id');
-        $categories = Category::pluck('name', 'id');
-
-        $tags = Tag::get();
-
-        return view(
-            'app.articles.edit',
-            compact('article', 'users', 'categories', 'tags')
-        );
+        return view('app.articles.edit', array_merge(compact('article'), $this->getFormData()));
     }
 
     /**
@@ -104,10 +91,9 @@ class ArticleController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $article);
 
-        $validated = $request->validated();
         $article->tags()->sync($request->tags);
 
-        $article->update($validated);
+        $article->update(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
 
         return redirect()
             ->route('articles.edit', $article)

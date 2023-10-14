@@ -1,0 +1,85 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Roboto+Slab:wght@100&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #004caa;
+  --secondary-color: #ec2727;
+  --bg-light-blue: #3672bc;
+  --bg-dark: #666;
+  --bg-white: #fff;
+  --primary-font: 'Roboto Condensed', sans-serif;
+  --primary-text: #004caa;
+  --secondary-text: #fc5185;
+  --text-white: #fff;
+  --text-black: #222;
+  --text-gray: #666;
+  --text-light: #ddd;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-family: var(--primary-font);
+  background-color: black;
+  color: var(--text-white);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: .375rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-light-blue);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+}
+
+/* ---------------------------------------------------- */
+
+/* --------------theme modification--------------- */
+
+/* ---------------------------------------------------- */
+
+.filter {
+  background: var(--bg-dark);
+}
+
+/*single page styles*/
+#sub_para_single_page
+{
+  font-style:italic;
+}
+
+#lr_para
+{
+  border-bottom: 2px solid var(--bs-form-invalid-border-color) ;
+}
+
+#ar_para
+{
+  border-left: 8px solid rgb(205,3,3) ;
+}
+
+
+

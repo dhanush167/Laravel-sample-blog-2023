@@ -25,15 +25,17 @@ class ArticleStoreRequest extends FormRequest
                 'required',
                 'unique:articles,title',
                 'max:255',
+                'min:3',
                 'string',
             ],
-            'slug' => ['required', 'unique:articles,slug', 'max:255', 'string'],
-            'excerpt' => ['required', 'max:255', 'string'],
-            'description' => ['required', 'max:255', 'string'],
+            'slug' => ['required', 'unique:articles,slug', 'max:255', 'string','min:3'],
+            'excerpt' => ['required', 'max:255', 'string','min:3'],
+            'description' => ['required', 'string','min:3'],
             'status' => ['required', 'boolean'],
             'user_id' => ['required', 'exists:users,id'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'tags' => ['array'],
+            'category_id' => ['required', 'exists:categories,id','integer'],
+            'tags' => ['array','nullable'],
+            'tags.*' => ['integer',Rule::exists('tags','id')],
         ];
     }
 }

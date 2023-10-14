@@ -22,16 +22,20 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => [
+                'sometimes',
                 'required',
                 Rule::unique('categories', 'name')->ignore($this->category),
                 'max:255',
+                'min:3',
                 'string',
             ],
-            'description' => ['nullable', 'max:255', 'string'],
+            'description' => ['nullable', 'string'],
             'slug' => [
+                'sometimes',
                 'required',
                 Rule::unique('categories', 'slug')->ignore($this->category),
                 'max:255',
+                'min:3',
                 'string',
             ],
         ];

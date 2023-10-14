@@ -22,23 +22,28 @@ class ArticleUpdateRequest extends FormRequest
     {
         return [
             'title' => [
+                'sometimes',
                 'required',
                 Rule::unique('articles', 'title')->ignore($this->article),
                 'max:255',
+                'min:3',
                 'string',
             ],
             'slug' => [
+                'sometimes',
                 'required',
                 Rule::unique('articles', 'slug')->ignore($this->article),
                 'max:255',
+                'min:3',
                 'string',
             ],
-            'excerpt' => ['required', 'max:255', 'string'],
-            'description' => ['required', 'max:255', 'string'],
+            'excerpt' => ['required', 'max:255','min:3', 'string'],
+            'description' => ['required', 'string','min:3',],
             'status' => ['required', 'boolean'],
-            'user_id' => ['required', 'exists:users,id'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'tags' => ['array'],
+            'user_id' => ['required', 'exists:users,id','integer'],
+            'category_id' => ['required', 'exists:categories,id','integer'],
+            'tags' => ['array','nullable'],
+            'tags.*' => ['integer',Rule::exists('tags','id')],
         ];
     }
 }

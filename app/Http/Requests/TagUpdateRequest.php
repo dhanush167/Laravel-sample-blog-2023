@@ -22,15 +22,19 @@ class TagUpdateRequest extends FormRequest
     {
         return [
             'name' => [
+                'sometimes',
                 'required',
                 Rule::unique('tags', 'name')->ignore($this->tag),
                 'max:255',
+                'min:3',
                 'string',
             ],
             'slug' => [
+                'sometimes',
                 'required',
                 Rule::unique('tags', 'slug')->ignore($this->tag),
                 'max:255',
+                'min:3',
                 'string',
             ],
         ];

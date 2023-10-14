@@ -20,9 +20,19 @@ use App\Http\Controllers\PermissionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*frontend pages*/
+Route::get('/', [\App\Http\Controllers\LandingPageController::class,'index'])->name('front-page');
+Route::get('/single-page/{article}', [\App\Http\Controllers\LandingPageController::class,'single'])->name('single-blog');
+Route::get('/create', [\App\Http\Controllers\LandingPageController::class,'create'])->name('create-article');
+Route::post('/store-front', [\App\Http\Controllers\LandingPageController::class,'storeFront'])->name('store-data-article');
+/*edit*/
+Route::get('/edit-article/{article}', [\App\Http\Controllers\LandingPageController::class,'EditFront'])->name('edit_article');
+/*update*/
+Route::patch('/article-update/{article}',[\App\Http\Controllers\LandingPageController::class,'UpdateFront'])->name('article_update');
+/*delete*/
+Route::delete('/article-delete/{article}',[\App\Http\Controllers\LandingPageController::class,'destroy'])->name('article_delete');
+Route::get('/dashboard', [\App\Http\Controllers\LandingPageController::class,'DashBoard'])->name('dashboard');
+
 
 Auth::routes();
 

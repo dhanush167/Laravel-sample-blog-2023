@@ -25,13 +25,15 @@ class CategoryStoreRequest extends FormRequest
                 'required',
                 'unique:categories,name',
                 'max:255',
+                'min:3',
                 'string',
             ],
-            'description' => ['nullable', 'max:255', 'string'],
+            'description' => ['nullable','string', 'min:3',],
             'slug' => [
                 'required',
                 'unique:categories,slug',
                 'max:255',
+                'min:3',
                 'string',
             ],
         ];

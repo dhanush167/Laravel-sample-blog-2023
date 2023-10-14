@@ -45,9 +45,7 @@ class CategoryController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        $validated = $request->validated();
-
-        $category = Category::create($validated);
+        $category = Category::create(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
 
         return redirect()
             ->route('categories.edit', $category)
@@ -83,9 +81,7 @@ class CategoryController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $category);
 
-        $validated = $request->validated();
-
-        $category->update($validated);
+        $category->update(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
 
         return redirect()
             ->route('categories.edit', $category)

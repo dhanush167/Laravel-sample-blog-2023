@@ -21,8 +21,8 @@ class TagStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:tags,name', 'max:255', 'string'],
-            'slug' => ['required', 'unique:tags,slug', 'max:255', 'string'],
+            'name' => ['required', 'unique:tags,name', 'max:255', 'string','min:3'],
+            'slug' => ['required', 'unique:tags,slug', 'max:255', 'string','min:3'],
         ];
     }
 }
