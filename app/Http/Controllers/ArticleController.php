@@ -22,6 +22,12 @@ class ArticleController extends Controller
         return compact('categories','tags','users');
     }
 
+    private function slugGenerate($slug)
+    {
+       return ['slug' => \Illuminate\Support\Str::slug($slug),];
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -54,7 +60,7 @@ class ArticleController extends Controller
     public function store(ArticleStoreRequest $request): RedirectResponse
     {
         $this->authorize('create', Article::class);
-        $article = Article::create(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
+        $article = Article::create($this->slugGenerate($request->slug) + $request->validated());
 
         $article->tags()->attach($request->tags);
 
@@ -93,7 +99,7 @@ class ArticleController extends Controller
 
         $article->tags()->sync($request->tags);
 
-        $article->update(['slug' => \Illuminate\Support\Str::slug($request->slug),] + $request->validated());
+        $article->update($this->slugGenerate($request->slug) + $request->validated());
 
         return redirect()
             ->route('articles.edit', $article)
