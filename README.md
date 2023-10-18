@@ -56,7 +56,7 @@ class ArticleUpdateRequest extends FormRequest
             'tags.*' => ['integer',Rule::exists('tags','id')],
         ];
     }
-    public function filters():array {
+    public function filters(): array {
         return [
             'title' => 'trim|sanitize',
             'slug' => 'trim|lowercase',
