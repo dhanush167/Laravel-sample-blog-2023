@@ -46,4 +46,16 @@ class ArticleUpdateRequest extends FormRequest
             'tags.*' => ['integer',Rule::exists('tags','id')],
         ];
     }
+    public function filters():array {
+        return [
+            'title' => 'trim|sanitize',
+            'slug' => 'trim|lowercase',
+            'excerpt' => 'trim|sanitize',
+            'description' => 'trim|sanitize',
+            'status' => 'trim',
+            'user_id' => 'trim|number',
+            'category_id' => 'trim|number',
+            'tags' => 'trim',
+        ];
+    }
 }
