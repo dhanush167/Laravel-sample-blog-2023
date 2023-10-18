@@ -24,7 +24,7 @@ class LandingPageController extends Controller
 
     public function index()
     {
-        $articles = Article::with(['user','tags'])->latest()->simplePaginate();
+        $articles = Article::where('status',1)->with(['user','tags'])->latest()->simplePaginate();
         return view('front.index', compact('articles'));
     }
 
@@ -77,7 +77,7 @@ class LandingPageController extends Controller
                 'slug' => \Illuminate\Support\Str::slug($request->title)]);
 
         $article->tags()->sync($request->tags);
-        return redirect(route('front-page'))->with('message','Article has Success fully updated');
+        return redirect(route('edit_article',$article))->with('message','Article has Success fully updated');
     }
 
     public function destroy(Article $article)
