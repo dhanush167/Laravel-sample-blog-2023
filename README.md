@@ -1,10 +1,12 @@
 <h3> Laravel Blog Sample </h3>
 
+![Maintenance](https://img.shields.io/badge/Status-Regular%20Maintenance-blue)
+
 <p>
     In this repository, I have improved the code quality on the admin dashboard side. However, I believe the front-end (visitor's side) still needs improvement, particularly in the HTML and CSS code quality. This is something I plan to focus on next.
 </p>
 
-![Maintenance](https://img.shields.io/badge/Status-Regular%20Maintenance-blue)
+
 
 
 
